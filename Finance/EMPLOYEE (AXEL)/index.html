@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TNVS - Driver Operations Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="login" class="login">
+        <div class="login-card">
+            <form id="loginForm" class="login-form">
+                <label>Username
+                    <input id="username" type="text" required autocomplete="username" placeholder="Enter your username">
+                </label>
+                <label>Password
+                    <input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password">
+                </label>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app" class="app" style="display:none">
+        <header class="app-header">
+            <button id="menuToggle" class="icon-btn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+            <div class="brand" role="img" aria-label="TNVS Driver Operations">
+                <svg viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <text x="10" y="16" font-size="16" font-weight="800" letter-spacing="0.5" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" fill="currentColor">TNVS</text>
+                </svg>
+            </div>
+            <div class="user">
+                <span id="currentUser">Welcome</span>
+                <button id="logoutBtn" class="text-btn">Logout</button>
+            </div>
+        </header>
+        
+        <nav id="sidebar" class="sidebar">
+            <div class="group">
+                <h4>Driver Operations</h4>
+                <button class="nav active" data-section="driver-dashboard" data-tooltip="Driver Dashboard">
+                    <span> Dashboard</span>
+                </button>
+                <button class="nav" data-section="driver-financial" data-tooltip="Financial Management">
+                    <span>Financial Management</span>
+                </button>
+                <button class="nav" data-section="driver-reports" data-tooltip="Driver Reports">
+                    <span> Reports</span>
+                </button>
+                <button class="nav" data-section="driver-settings" data-tooltip="Driver Settings">
+                    <span>Settings</span>
+                </button>
+            </div>
+        </nav>
+        
+        <div id="overlay" class="overlay"></div>
+        
+        <main class="content hidden" id="mainContent">
+            <!-- Driver Operations Dashboard -->
+            <section id="driver-dashboard" class="section active">
+                <h3>Driver Operations Dashboard</h3>
+                
+                <!-- Driver Earnings Overview -->
+                <div class="dashboard-section">
+                    <h4>Driver Earnings Overview</h4>
+                    <div class="cards">
+
+                        <div class="card success">
+                            <h5>Total Driver Earnings</h5>
+                            <div class="big">₱2,450,000</div>
+                            <div class="card-trend">+15.3% from last month</div>
+                        </div>
+                        <div class="card warning">
+                            <h5>Active Drivers</h5>
+                            <div class="big">87</div>
+                            <div class="card-trend">+3 new this month</div>
+                        </div>
+                        <div class="card success">
+                            <h5>Average Driver Earnings</h5>
+                            <div class="big">₱28,161</div>
+                            <div class="card-trend">+8.7% from last month</div>
+                        </div>
+                        <div class="card warning">
+                            <h5>Pending Payouts</h5>
+                            <div class="big">₱180,000</div>
+                            <div class="card-trend">Due this week</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily/Weekly Driver Payouts -->
+                <div class="dashboard-section">
+                    <h4>Daily/Weekly Driver Payouts</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Driver Name</th>
+                                    <th>Period</th>
+                                    <th>Gross Earnings</th>
+                                    <th>Commission</th>
+                                    <th>Net Payout</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>Week 32 (Aug 5-11)</td>
+                                    <td>₱15,000</td>
+                                    <td>₱1,500</td>
+                                    <td>₱13,500</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td><button class="btn-small">Process Payment</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Maria Santos</td>
+                                    <td>Week 32 (Aug 5-11)</td>
+                                    <td>₱18,500</td>
+                                    <td>₱1,850</td>
+                                    <td>₱16,650</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td><button class="btn-small">Process Payment</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Driver Performance vs Earnings -->
+                <div class="dashboard-section">
+                    <h4>Driver Performance vs Earnings</h4>
+                    <div class="analytics">
+                        <div class="chart-card">
+                            <h5>Top Performing Drivers</h5>
+                            <div class="performance-chart" id="performanceChart">
+                                <div class="performance-bar">
+                                    <span class="driver-name">Juan Dela Cruz</span>
+                                    <div class="bar-container">
+                                        <div class="bar" data-width="95" style="width: 0%"></div>
+                                        <span class="value">₱18,500</span>
+                                    </div>
+                                </div>
+                                <div class="performance-bar">
+                                    <span class="driver-name">Maria Santos</span>
+                                    <div class="bar-container">
+                                        <div class="bar" data-width="88" style="width: 0%"></div>
+                                        <span class="value">₱16,800</span>
+                                    </div>
+                                </div>
+                                <div class="performance-bar">
+                                    <span class="driver-name">Pedro Reyes</span>
+                                    <div class="bar-container">
+                                        <div class="bar" data-width="82" style="width: 0%"></div>
+                                        <span class="value">₱15,200</span>
+                                    </div>
+                                </div>
+                                <div class="performance-bar">
+                                    <span class="driver-name">Ana Garcia</span>
+                                    <div class="bar-container">
+                                        <div class="bar" data-width="75" style="width: 0%"></div>
+                                        <span class="value">₱14,500</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Performance Metrics -->
+                            <div class="performance-metrics" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                <h6 style="margin-bottom: 15px; color: #666;">Performance Summary</h6>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 18px; font-weight: bold; color: #28a745;">₱65,000</div>
+                                        <div style="font-size: 12px; color: #666;">Total Earnings</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 18px; font-weight: bold; color: #ffc107;">4.85★</div>
+                                        <div style="font-size: 12px; color: #666;">Avg Rating</div>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div style="font-size: 18px; font-weight: bold; color: #17a2b8;">85%</div>
+                                        <div style="font-size: 12px; color: #666;">Performance</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Chart Controls -->
+                            <div class="chart-controls" style="margin-top: 15px; text-align: center;">
+                                <button class="btn-small" onclick="refreshPerformanceChart()">Refresh Chart</button>
+                                <button class="btn-small" onclick="exportPerformanceData()">Export Data</button>
+                                <button class="btn-small" onclick="toggleChartView()">Toggle View</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Earnings Trend Chart -->
+                        <div class="chart-card">
+                            <h5>Monthly Earnings Trend</h5>
+                            <div class="earnings-chart" id="earningsChart">
+                                <canvas id="earningsCanvas" width="400" height="200"></canvas>
+                            </div>
+                            <div class="chart-controls" style="margin-top: 15px; text-align: center;">
+                                <button class="btn-small" onclick="updateEarningsChart()">Update Chart</button>
+                                <button class="btn-small" onclick="downloadEarningsChart()">Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driver Payment Status -->
+                <div class="dashboard-section">
+                    <h4>Driver Payment Status</h4>
+                    <div class="status-cards">
+                        <div class="status-card">
+                            <div class="status-icon pending">⏳</div>
+                            <div class="status-info">
+                                <h5>Pending Payments</h5>
+                                <div class="count">23</div>
+                                <div class="amount">₱180,000</div>
+                            </div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon completed">✅</div>
+                            <div class="status-info">
+                                <h5>Completed This Week</h5>
+                                <div class="count">64</div>
+                                <div class="amount">₱1,820,000</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Financial Management -->
+            <section id="driver-financial" class="section">
+                <h3>Driver Financial Management</h3>
+                
+                <!-- Process Driver Payments -->
+                <div class="dashboard-section">
+                    <h4>Process Driver Payments</h4>
+                    <div class="action-panel">
+                        <button class="btn-primary">Bulk Payment Processing</button>
+                        <button class="btn-secondary">Individual Payment</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Driver ID</th>
+                                    <th>Driver Name</th>
+                                    <th>Payment Period</th>
+                                    <th>Amount Due</th>
+                                    <th>Payment Method</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>DR001</td>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>Week 32</td>
+                                    <td>₱13,500</td>
+                                    <td>Bank Transfer</td>
+                                    <td><span class="status pending">Ready</span></td>
+                                    <td>
+                                        <button class="btn-small">Process</button>
+                                        <button class="btn-small">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Adjust Commission Rates -->
+                <div class="dashboard-section">
+                    <h4>Adjust Commission Rates</h4>
+                    <div class="commission-panel">
+                        <div class="commission-form">
+                            <div class="form-group">
+                                <label>Driver Category</label>
+                                <select>
+                                    <option>New Drivers (0-3 months)</option>
+                                    <option>Regular Drivers (3-12 months)</option>
+                                    <option>Senior Drivers (1+ years)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Commission Rate (%)</label>
+                                <input type="number" value="10" min="0" max="25" step="0.5">
+                            </div>
+                            <button class="btn-primary">Update Commission</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manage Driver Bonuses/Incentives -->
+                <div class="dashboard-section">
+                    <h4>Manage Driver Bonuses/Incentives</h4>
+                    <div class="bonus-panel">
+                        <div class="bonus-types">
+                            <div class="bonus-card">
+                                <h5>Performance Bonus</h5>
+                                <div class="bonus-details">
+                                    <p>₱500 for completing 50+ trips/week</p>
+                                    <p>₱1,000 for 5-star rating average</p>
+                                </div>
+                                <button class="btn-small">Edit</button>
+                            </div>
+                            <div class="bonus-card">
+                                <h5>Referral Bonus</h5>
+                                <div class="bonus-details">
+                                    <p>₱1,000 for successful driver referral</p>
+                                </div>
+                                <button class="btn-small">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driver Expense Reimbursements -->
+                <div class="dashboard-section">
+                    <h4>Driver Expense Reimbursements</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Driver Name</th>
+                                    <th>Expense Type</th>
+                                    <th>Amount</th>
+                                    <th>Date</th>
+                                    <th>Receipt</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>Fuel</td>
+                                    <td>₱1,200</td>
+                                    <td>2025-08-13</td>
+                                    <td><button class="btn-small">View</button></td>
+                                    <td><span class="status pending">Pending</span></td>
+                                    <td>
+                                        <button class="btn-small">Approve</button>
+                                        <button class="btn-small">Reject</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Driver Tax Documents (1099s) -->
+                <div class="dashboard-section">
+                    <h4>Driver Tax Documents (1099s)</h4>
+                    <div class="tax-panel">
+                        <div class="tax-actions">
+                            <button class="btn-primary">Generate 1099 Forms</button>
+                            <button class="btn-secondary">Download Tax Summary</button>
+                        </div>
+                        <div class="table-wrap">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Driver Name</th>
+                                        <th>Tax Year</th>
+                                        <th>Total Earnings</th>
+                                        <th>1099 Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Juan Dela Cruz</td>
+                                        <td>2024</td>
+                                        <td>₱180,000</td>
+                                        <td><span class="status completed">Generated</span></td>
+                                        <td>
+                                            <button class="btn-small">Download</button>
+                                            <button class="btn-small">Email</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Reports -->
+            <section id="driver-reports" class="section">
+                <h3>Driver Reports</h3>
+                
+                <!-- Driver Earnings Reports -->
+                <div class="dashboard-section">
+                    <h4>Driver Earnings Reports</h4>
+                    <div class="report-filters">
+                        <div class="filter-group">
+                            <label>Date Range</label>
+                            <select>
+                                <option>Last 7 days</option>
+                                <option>Last 30 days</option>
+                                <option>Last 3 months</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary">Generate Report</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Driver Name</th>
+                                    <th>Total Trips</th>
+                                    <th>Gross Earnings</th>
+                                    <th>Commission</th>
+                                    <th>Bonuses</th>
+                                    <th>Net Earnings</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>156</td>
+                                    <td>₱18,500</td>
+                                    <td>₱1,850</td>
+                                    <td>₱500</td>
+                                    <td>₱17,150</td>
+                                    <td>
+                                        <button class="btn-small">View Details</button>
+                                        <button class="btn-small">Export</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Commission Analysis -->
+                <div class="dashboard-section">
+                    <h4>Commission Analysis</h4>
+                    <div class="analytics">
+                        <div class="chart-card">
+                            <h5>Commission by Driver Category</h5>
+                            <div class="breakdown">
+                                <div class="breakdown-row">
+                                    <span class="label">New Drivers</span>
+                                    <div class="barline"><span style="width:15%"></span></div>
+                                    <span class="value">₱367,500</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span class="label">Regular Drivers</span>
+                                    <div class="barline"><span style="width:45%"></span></div>
+                                    <span class="value">₱1,102,500</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span class="label">Senior Drivers</span>
+                                    <div class="barline"><span style="width:30%"></span></div>
+                                    <span class="value">₱735,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driver Retention vs Pay -->
+                <div class="dashboard-section">
+                    <h4>Driver Retention vs Pay</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Pay Level</th>
+                                    <th>Driver Count</th>
+                                    <th>Retention Rate</th>
+                                    <th>Avg. Tenure</th>
+                                    <th>Monthly Turnover</th>
+                                    <th>Trend</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>High Pay (₱20k+)</td>
+                                    <td>25</td>
+                                    <td><span class="status success">92%</span></td>
+                                    <td>18 months</td>
+                                    <td>2.1%</td>
+                                    <td><span class="trend-up">↗ +5%</span></td>
+                                    <td>
+                                        <button class="btn-small view-drivers" data-level="high">View Drivers</button>
+                                        <button class="btn-small">Analyze</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Medium Pay (₱15k-20k)</td>
+                                    <td>42</td>
+                                    <td><span class="status warning">78%</span></td>
+                                    <td>12 months</td>
+                                    <td>5.3%</td>
+                                    <td><span class="trend-stable">→ 0%</span></td>
+                                    <td>
+                                        <button class="btn-small view-drivers" data-level="medium">View Drivers</button>
+                                        <button class="btn-small">Analyze</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Low Pay (<₱15k)</td>
+                                    <td>20</td>
+                                    <td><span class="status danger">45%</span></td>
+                                    <td>6 months</td>
+                                    <td>12.8%</td>
+                                    <td><span class="trend-down">↘ -8%</span></td>
+                                    <td>
+                                        <button class="btn-small view-drivers" data-level="low">View Drivers</button>
+                                        <button class="btn-small">Analyze</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="retention-charts" style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="chart-card">
+                            <h5>Monthly Turnover Trend</h5>
+                            <div class="table-wrap">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Month</th>
+                                            <th>Turnover Rate</th>
+                                            <th>Drivers Left</th>
+                                            <th>New Hires</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>January</td>
+                                            <td>15%</td>
+                                            <td>8</td>
+                                            <td>12</td>
+                                        </tr>
+                                        <tr>
+                                            <td>February</td>
+                                            <td>12%</td>
+                                            <td>6</td>
+                                            <td>10</td>
+                                        </tr>
+                                        <tr>
+                                            <td>March</td>
+                                            <td>18%</td>
+                                            <td>10</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>April</td>
+                                            <td>14%</td>
+                                            <td>7</td>
+                                            <td>11</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h5>Retention by Department</h5>
+                            <div class="table-wrap">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Department</th>
+                                            <th>Retention Rate</th>
+                                            <th>Avg. Pay</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Premium Service</td>
+                                            <td>95%</td>
+                                            <td>₱25,000</td>
+                                            <td><span class="status success">Excellent</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Standard Service</td>
+                                            <td>78%</td>
+                                            <td>₱18,000</td>
+                                            <td><span class="status warning">Good</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Economy Service</td>
+                                            <td>45%</td>
+                                            <td>₱12,000</td>
+                                            <td><span class="status danger">Poor</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Earning Drivers -->
+                <div class="dashboard-section">
+                    <h4>Top Earning Drivers</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Driver Name</th>
+                                    <th>Driver ID</th>
+                                    <th>Monthly Earnings</th>
+                                    <th>Total Trips</th>
+                                    <th>Rating</th>
+                                    <th>Performance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="rank-badge rank-1">#1</span></td>
+                                    <td>Juan Dela Cruz</td>
+                                    <td>DR001</td>
+                                    <td><strong>₱18,500</strong></td>
+                                    <td>156</td>
+                                    <td><span class="rating">4.9★</span></td>
+                                    <td><span class="status success">Excellent</span></td>
+                                    <td>
+                                        <button class="btn-small view-driver-details" data-id="DR001">View Details</button>
+                                        <button class="btn-small">Export Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge rank-2">#2</span></td>
+                                    <td>Maria Santos</td>
+                                    <td>DR002</td>
+                                    <td><strong>₱16,800</strong></td>
+                                    <td>142</td>
+                                    <td><span class="rating">4.8★</span></td>
+                                    <td><span class="status success">Excellent</span></td>
+                                    <td>
+                                        <button class="btn-small view-driver-details" data-id="DR002">View Details</button>
+                                        <button class="btn-small">Export Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge rank-3">#3</span></td>
+                                    <td>Pedro Reyes</td>
+                                    <td>DR003</td>
+                                    <td><strong>₱15,200</strong></td>
+                                    <td>138</td>
+                                    <td><span class="rating">4.7★</span></td>
+                                    <td><span class="status success">Excellent</span></td>
+                                    <td>
+                                        <button class="btn-small view-driver-details" data-id="DR003">View Details</button>
+                                        <button class="btn-small">Export Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge rank-4">#4</span></td>
+                                    <td>Ana Garcia</td>
+                                    <td>DR004</td>
+                                    <td><strong>₱14,500</strong></td>
+                                    <td>125</td>
+                                    <td><span class="rating">4.6★</span></td>
+                                    <td><span class="status warning">Good</span></td>
+                                    <td>
+                                        <button class="btn-small view-driver-details" data-id="DR004">View Details</button>
+                                        <button class="btn-small">Export Report</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><span class="rank-badge rank-5">#5</span></td>
+                                    <td>Carlos Lopez</td>
+                                    <td>DR005</td>
+                                    <td><strong>₱13,800</strong></td>
+                                    <td>118</td>
+                                    <td><span class="rating">4.5★</span></td>
+                                    <td><span class="status warning">Good</span></td>
+                                    <td>
+                                        <button class="btn-small view-driver-details" data-id="DR005">View Details</button>
+                                        <button class="btn-small">Export Report</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="top-drivers-summary" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="summary-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                            <h5>Top 5 Total Earnings</h5>
+                            <div style="font-size: 24px; font-weight: bold; color: #28a745;">₱79,800</div>
+                            <p>This month</p>
+                        </div>
+                        <div class="summary-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                            <h5>Average Rating</h5>
+                            <div style="font-size: 24px; font-weight: bold; color: #ffc107;">4.7★</div>
+                            <p>Top performers</p>
+                        </div>
+                        <div class="summary-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; text-align: center;">
+                            <h5>Total Trips</h5>
+                            <div style="font-size: 24px; font-weight: bold; color: #17a2b8;">679</div>
+                            <p>Combined</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Driver Settings -->
+            <section id="driver-settings" class="section">
+                <h3>Driver Settings</h3>
+                
+                <!-- Payment Schedules -->
+                <div class="dashboard-section">
+                    <h4>Payment Schedules</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Schedule Type</th>
+                                    <th>Frequency</th>
+                                    <th>Payment Day</th>
+                                    <th>Cut-off Time</th>
+                                    <th>Next Payment</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Standard Schedule</td>
+                                    <td>Weekly</td>
+                                    <td>Friday</td>
+                                    <td>Thursday 11:59 PM</td>
+                                    <td>August 15, 2025</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-schedule" data-id="1">Edit</button>
+                                        <button class="btn-small">Duplicate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Premium Schedule</td>
+                                    <td>Bi-weekly</td>
+                                    <td>Every other Friday</td>
+                                    <td>Wednesday 11:59 PM</td>
+                                    <td>August 22, 2025</td>
+                                    <td><span class="status inactive">Inactive</span></td>
+                                    <td>
+                                        <button class="btn-small edit-schedule" data-id="2">Edit</button>
+                                        <button class="btn-small">Activate</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="add-schedule-form" style="margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                        <h5>Add New Schedule</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label>Schedule Name</label>
+                                <input type="text" id="scheduleName" placeholder="Enter schedule name">
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Frequency</label>
+                                <select id="paymentFrequency">
+                                    <option>Weekly</option>
+                                    <option>Bi-weekly</option>
+                                    <option>Monthly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Day</label>
+                                <select id="paymentDay">
+                                    <option>Monday</option>
+                                    <option>Tuesday</option>
+                                    <option>Wednesday</option>
+                                    <option>Thursday</option>
+                                    <option>Friday</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Cut-off Time</label>
+                                <input type="time" id="cutoffTime" value="23:59">
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="addSchedule()">Add Schedule</button>
+                    </div>
+                </div>
+
+                <!-- Commission Rules -->
+                <div class="dashboard-section">
+                    <h4>Commission Rules</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rule Type</th>
+                                    <th>Category</th>
+                                    <th>Rate/Amount</th>
+                                    <th>Conditions</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Base Commission</td>
+                                    <td>All Drivers</td>
+                                    <td>10%</td>
+                                    <td>Min: ₱50, Max: ₱5,000/week</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-rule" data-id="1">Edit</button>
+                                        <button class="btn-small">Duplicate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Performance Bonus</td>
+                                    <td>High Performers</td>
+                                    <td>₱500</td>
+                                    <td>50+ trips/week</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-rule" data-id="2">Edit</button>
+                                        <button class="btn-small">Duplicate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Bonus</td>
+                                    <td>Top Rated</td>
+                                    <td>₱300</td>
+                                    <td>4.8+ star rating</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-rule" data-id="3">Edit</button>
+                                        <button class="btn-small">Duplicate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Referral Bonus</td>
+                                    <td>All Drivers</td>
+                                    <td>₱1,000</td>
+                                    <td>Successful referral</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-rule" data-id="4">Edit</button>
+                                        <button class="btn-small">Duplicate</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="add-rule-form" style="margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                        <h5>Add New Commission Rule</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label>Rule Type</label>
+                                <input type="text" id="ruleType" placeholder="e.g., Holiday Bonus">
+                            </div>
+                            <div class="form-group">
+                                <label>Driver Category</label>
+                                <select id="driverCategory">
+                                    <option>All Drivers</option>
+                                    <option>New Drivers</option>
+                                    <option>Regular Drivers</option>
+                                    <option>Senior Drivers</option>
+                                    <option>Premium Drivers</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Rate/Amount</label>
+                                <input type="text" id="ruleAmount" placeholder="e.g., 5% or ₱500">
+                            </div>
+                            <div class="form-group">
+                                <label>Conditions</label>
+                                <input type="text" id="ruleConditions" placeholder="e.g., Working on holidays">
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="addCommissionRule()">Add Rule</button>
+                    </div>
+                </div>
+
+                <!-- Bonus Criteria -->
+                <div class="dashboard-section">
+                    <h4>Bonus Criteria</h4>
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Bonus Type</th>
+                                    <th>Criteria</th>
+                                    <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Driver Category</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Performance Bonus</td>
+                                    <td>Complete 50+ trips per week</td>
+                                    <td>₱500</td>
+                                    <td>Weekly</td>
+                                    <td>All Drivers</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-bonus" data-id="1">Edit</button>
+                                        <button class="btn-small delete-bonus" data-id="1">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Rating Bonus</td>
+                                    <td>Maintain 4.8+ star rating</td>
+                                    <td>₱300</td>
+                                    <td>Monthly</td>
+                                    <td>All Drivers</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-bonus" data-id="2">Edit</button>
+                                        <button class="btn-small delete-bonus" data-id="2">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Referral Bonus</td>
+                                    <td>Successfully refer new driver</td>
+                                    <td>₱1,000</td>
+                                    <td>One-time</td>
+                                    <td>All Drivers</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-bonus" data-id="3">Edit</button>
+                                        <button class="btn-small delete-bonus" data-id="3">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Holiday Bonus</td>
+                                    <td>Work on major holidays</td>
+                                    <td>₱2,000</td>
+                                    <td>Per holiday</td>
+                                    <td>All Drivers</td>
+                                    <td><span class="status active">Active</span></td>
+                                    <td>
+                                        <button class="btn-small edit-bonus" data-id="4">Edit</button>
+                                        <button class="btn-small delete-bonus" data-id="4">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="add-bonus-form" style="margin-top: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                        <h5>Add New Bonus Criteria</h5>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group">
+                                <label>Bonus Type</label>
+                                <input type="text" id="bonusType" placeholder="e.g., Weekend Bonus">
+                            </div>
+                            <div class="form-group">
+                                <label>Criteria</label>
+                                <input type="text" id="bonusCriteria" placeholder="e.g., Work on weekends">
+                            </div>
+                            <div class="form-group">
+                                <label>Amount</label>
+                                <input type="number" id="bonusAmount" placeholder="₱500" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Frequency</label>
+                                <select id="bonusFrequency">
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                    <option>One-time</option>
+                                    <option>Per event</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Driver Category</label>
+                                <select id="bonusDriverCategory">
+                                    <option>All Drivers</option>
+                                    <option>New Drivers</option>
+                                    <option>Regular Drivers</option>
+                                    <option>Senior Drivers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="addBonusCriteria()">Add Bonus Criteria</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    
+    <!-- Driver Operations Dashboard JavaScript -->
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all button functionality
+            initializeButtons();
+        });
+
+        function initializeButtons() {
+            // Wait a bit for DOM to be fully ready
+            setTimeout(() => {
+                // Process Payment buttons in Daily/Weekly Driver Payouts
+                document.querySelectorAll('.btn-small').forEach(button => {
+                    if (button.textContent.includes('Process Payment')) {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            const amount = row.cells[4].textContent;
+                            processPayment(driverName, amount);
+                        });
+                    }
+                    
+                    // Process button in financial management
+                    if (button.textContent === 'Process') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverId = row.cells[0].textContent;
+                            const driverName = row.cells[1].textContent;
+                            const amount = row.cells[3].textContent;
+                            processIndividualPayment(driverId, driverName, amount);
+                        });
+                    }
+                    
+                    // Edit buttons
+                    if (button.textContent === 'Edit') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const dataId = this.getAttribute('data-id');
+                            if (dataId) {
+                                editItem(this, dataId);
+                            } else {
+                                editRow(row);
+                            }
+                        });
+                    }
+                    
+                    // View buttons (View Receipt)
+                    if (button.textContent === 'View') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            viewReceipt(driverName);
+                        });
+                    }
+                    
+                    // View Details buttons
+                    if (button.textContent === 'View Details') {
+                        button.addEventListener('click', function() {
+                            const dataId = this.getAttribute('data-id');
+                            viewDriverDetails(dataId);
+                        });
+                    }
+                    
+                    // Approve buttons
+                    if (button.textContent === 'Approve') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            const amount = row.cells[2].textContent;
+                            approveExpense(driverName, amount);
+                        });
+                    }
+                    
+                    // Reject buttons
+                    if (button.textContent === 'Reject') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            const amount = row.cells[2].textContent;
+                            rejectExpense(driverName, amount);
+                        });
+                    }
+                    
+                    // Download buttons
+                    if (button.textContent === 'Download') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            const taxYear = row.cells[1].textContent;
+                            downloadTaxDocument(driverName, taxYear);
+                        });
+                    }
+                    
+                    // Email buttons
+                    if (button.textContent === 'Email') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            const taxYear = row.cells[1].textContent;
+                            emailTaxDocument(driverName, taxYear);
+                        });
+                    }
+                    
+                    // Export buttons
+                    if (button.textContent === 'Export') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverName = row.cells[0].textContent;
+                            exportDriverReport(driverName);
+                        });
+                    }
+                    
+                    // Export Report buttons
+                    if (button.textContent === 'Export Report') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const driverId = row.cells[2].textContent;
+                            exportDriverReport(driverId);
+                        });
+                    }
+                    
+                    // Delete buttons
+                    if (button.textContent === 'Delete') {
+                        button.addEventListener('click', function() {
+                            const dataId = this.getAttribute('data-id');
+                            if (dataId) {
+                                deleteItem(this, dataId);
+                            }
+                        });
+                    }
+                    
+                    // View Drivers buttons
+                    if (button.textContent === 'View Drivers') {
+                        button.addEventListener('click', function() {
+                            const level = this.getAttribute('data-level');
+                            viewDriversByLevel(level);
+                        });
+                    }
+                    
+                    // Analyze buttons
+                    if (button.textContent === 'Analyze') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            const payLevel = row.cells[0].textContent;
+                            analyzePayLevel(payLevel);
+                        });
+                    }
+                    
+                    // Edit Schedule buttons
+                    if (button.textContent === 'Edit' && this.classList.contains('edit-schedule')) {
+                        button.addEventListener('click', function() {
+                            const dataId = this.getAttribute('data-id');
+                            editSchedule(dataId);
+                        });
+                    }
+                    
+                    // Edit Rule buttons
+                    if (button.textContent === 'Edit' && this.classList.contains('edit-rule')) {
+                        button.addEventListener('click', function() {
+                            const dataId = this.getAttribute('data-id');
+                            editRule(dataId);
+                        });
+                    }
+                    
+                    // Edit Bonus buttons
+                    if (button.textContent === 'Edit' && this.classList.contains('edit-bonus')) {
+                        button.addEventListener('click', function() {
+                            const dataId = this.getAttribute('data-id');
+                            editBonus(dataId);
+                        });
+                    }
+                    
+                    // Duplicate buttons
+                    if (button.textContent === 'Duplicate') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            duplicateItem(row);
+                        });
+                    }
+                    
+                    // Activate buttons
+                    if (button.textContent === 'Activate') {
+                        button.addEventListener('click', function() {
+                            const row = this.closest('tr');
+                            activateSchedule(row);
+                        });
+                    }
+                });
+                
+                // Bulk Payment Processing button
+                const bulkPaymentBtns = document.querySelectorAll('.btn-primary');
+                bulkPaymentBtns.forEach(btn => {
+                    if (btn.textContent === 'Bulk Payment Processing') {
+                        btn.addEventListener('click', bulkPaymentProcessing);
+                    }
+                });
+                
+                // Individual Payment button
+                const individualPaymentBtns = document.querySelectorAll('.btn-secondary');
+                individualPaymentBtns.forEach(btn => {
+                    if (btn.textContent === 'Individual Payment') {
+                        btn.addEventListener('click', individualPaymentMode);
+                    }
+                });
+                
+                // Update Commission button
+                const updateCommissionBtns = document.querySelectorAll('.btn-primary');
+                updateCommissionBtns.forEach(btn => {
+                    if (btn.textContent === 'Update Commission') {
+                        btn.addEventListener('click', updateCommission);
+                    }
+                });
+                
+                // Generate Report button
+                const generateReportBtns = document.querySelectorAll('.btn-primary');
+                generateReportBtns.forEach(btn => {
+                    if (btn.textContent === 'Generate Report') {
+                        btn.addEventListener('click', generateDriverReport);
+                    }
+                });
+                
+                // Generate 1099 Forms button
+                const generate1099Btns = document.querySelectorAll('.btn-primary');
+                generate1099Btns.forEach(btn => {
+                    if (btn.textContent === 'Generate 1099 Forms') {
+                        btn.addEventListener('click', generate1099Forms);
+                    }
+                });
+                
+                // Download Tax Summary button
+                const downloadTaxSummaryBtns = document.querySelectorAll('.btn-secondary');
+                downloadTaxSummaryBtns.forEach(btn => {
+                    if (btn.textContent === 'Download Tax Summary') {
+                        btn.addEventListener('click', downloadTaxSummary);
+                    }
+                });
+                
+                // Initialize performance chart
+                initializePerformanceChart();
+            }, 100);
+        }
+
+        // Payment Processing Functions
+        function processPayment(driverName, amount) {
+            alert(`Processing payment of ${amount} for ${driverName}...`);
+            // Here you would integrate with your payment processing system
+            console.log(`Payment processed for ${driverName}: ${amount}`);
+        }
+
+        function processIndividualPayment(driverId, driverName, amount) {
+            alert(`Processing individual payment of ${amount} for ${driverName} (${driverId})...`);
+            // Here you would integrate with your payment processing system
+            console.log(`Individual payment processed for ${driverName}: ${amount}`);
+        }
+
+        function bulkPaymentProcessing() {
+            alert('Starting bulk payment processing for all eligible drivers...');
+            // Here you would implement bulk payment logic
+            console.log('Bulk payment processing initiated');
+        }
+
+        // Edit Functions
+        function editItem(button, dataId) {
+            alert(`Editing item with ID: ${dataId}`);
+            // Here you would open an edit modal or form
+            console.log(`Editing item: ${dataId}`);
+        }
+
+        function editRow(row) {
+            const cells = row.cells;
+            alert(`Editing row for: ${cells[0].textContent}`);
+            // Here you would make the row editable
+            console.log(`Editing row: ${cells[0].textContent}`);
+        }
+
+        // View Functions
+        function viewDriverDetails(driverId) {
+            alert(`Viewing detailed information for driver: ${driverId}`);
+            // Here you would open a detailed view modal
+            console.log(`Viewing driver details: ${driverId}`);
+        }
+
+        // Expense Management Functions
+        function approveExpense(driverName, amount) {
+            alert(`Approving expense of ${amount} for ${driverName}`);
+            // Here you would update the expense status and process reimbursement
+            console.log(`Expense approved for ${driverName}: ${amount}`);
+        }
+
+        function rejectExpense(driverName, amount) {
+            alert(`Rejecting expense of ${amount} for ${driverName}`);
+            // Here you would update the expense status and notify driver
+            console.log(`Expense rejected for ${driverName}: ${amount}`);
+        }
+
+        // Tax Document Functions
+        function downloadTaxDocument(driverName, taxYear) {
+            alert(`Downloading ${taxYear} tax document for ${driverName}`);
+            // Here you would trigger file download
+            console.log(`Downloading tax document for ${driverName}: ${taxYear}`);
+        }
+
+        function emailTaxDocument(driverName, taxYear) {
+            alert(`Emailing ${taxYear} tax document to ${driverName}`);
+            // Here you would open email composition
+            console.log(`Emailing tax document to ${driverName}: ${taxYear}`);
+        }
+
+        function generate1099Forms() {
+            alert('Generating 1099 forms for all eligible drivers...');
+            // Here you would implement 1099 generation logic
+            console.log('1099 forms generation initiated');
+        }
+
+        // Report Functions
+        function exportDriverReport(driverName) {
+            alert(`Exporting report for ${driverName}`);
+            // Here you would trigger report export
+            console.log(`Exporting report for ${driverName}`);
+        }
+
+        function generateDriverReport() {
+            alert('Generating driver earnings report...');
+            // Here you would implement report generation logic
+            console.log('Driver earnings report generation initiated');
+        }
+
+        // Delete Functions
+        function deleteItem(button, dataId) {
+            if (confirm(`Are you sure you want to delete item ${dataId}?`)) {
+                alert(`Deleting item ${dataId}...`);
+                // Here you would implement deletion logic
+                console.log(`Deleting item: ${dataId}`);
+                // Remove the row from the table
+                const row = button.closest('tr');
+                if (row) {
+                    row.remove();
+                }
+            }
+        }
+
+        // View Functions
+        function viewDriversByLevel(level) {
+            alert(`Viewing drivers in ${level} pay level`);
+            // Here you would filter and display drivers by pay level
+            console.log(`Viewing drivers by level: ${level}`);
+        }
+
+        // Edit Functions for Settings
+        function editSchedule(dataId) {
+            alert(`Editing schedule with ID: ${dataId}`);
+            // Here you would open schedule edit modal
+            console.log(`Editing schedule: ${dataId}`);
+        }
+
+        function editRule(dataId) {
+            alert(`Editing commission rule with ID: ${dataId}`);
+            // Here you would open rule edit modal
+            console.log(`Editing rule: ${dataId}`);
+        }
+
+        function editBonus(dataId) {
+            alert(`Editing bonus criteria with ID: ${dataId}`);
+            // Here you would open bonus edit modal
+            console.log(`Editing bonus: ${dataId}`);
+        }
+
+        // Add Functions for Settings
+        function addSchedule() {
+            const name = document.getElementById('scheduleName').value;
+            const frequency = document.getElementById('paymentFrequency').value;
+            const day = document.getElementById('paymentDay').value;
+            const cutoff = document.getElementById('cutoffTime').value;
+            
+            if (name && frequency && day && cutoff) {
+                alert(`Adding new schedule: ${name} - ${frequency} on ${day} with cutoff at ${cutoff}`);
+                // Here you would add the schedule to your system
+                console.log(`New schedule added: ${name}`);
+                
+                // Clear the form
+                document.getElementById('scheduleName').value = '';
+                document.getElementById('paymentFrequency').value = 'Weekly';
+                document.getElementById('paymentDay').value = 'Monday';
+                document.getElementById('cutoffTime').value = '23:59';
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function addCommissionRule() {
+            const type = document.getElementById('ruleType').value;
+            const category = document.getElementById('driverCategory').value;
+            const amount = document.getElementById('ruleAmount').value;
+            const conditions = document.getElementById('ruleConditions').value;
+            
+            if (type && category && amount && conditions) {
+                alert(`Adding new commission rule: ${type} for ${category} - ${amount} under ${conditions}`);
+                // Here you would add the rule to your system
+                console.log(`New commission rule added: ${type}`);
+                
+                // Clear the form
+                document.getElementById('ruleType').value = '';
+                document.getElementById('driverCategory').value = 'All Drivers';
+                document.getElementById('ruleAmount').value = '';
+                document.getElementById('ruleConditions').value = '';
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        function addBonusCriteria() {
+            const type = document.getElementById('bonusType').value;
+            const criteria = document.getElementById('bonusCriteria').value;
+            const amount = document.getElementById('bonusAmount').value;
+            const frequency = document.getElementById('bonusFrequency').value;
+            const category = document.getElementById('bonusDriverCategory').value;
+            
+            if (type && criteria && amount && frequency && category) {
+                alert(`Adding new bonus criteria: ${type} - ${criteria} for ${amount} ${frequency} for ${category}`);
+                // Here you would add the bonus criteria to your system
+                console.log(`New bonus criteria added: ${type}`);
+                
+                // Clear the form
+                document.getElementById('bonusType').value = '';
+                document.getElementById('bonusCriteria').value = '';
+                document.getElementById('bonusAmount').value = '';
+                document.getElementById('bonusFrequency').value = 'Weekly';
+                document.getElementById('bonusDriverCategory').value = 'All Drivers';
+            } else {
+                alert('Please fill in all fields');
+            }
+        }
+
+        // Additional Functions for Missing Buttons
+        function viewReceipt(driverName) {
+            alert(`Viewing receipt for ${driverName}`);
+            // Here you would open receipt viewer modal
+            console.log(`Viewing receipt for ${driverName}`);
+        }
+
+        function individualPaymentMode() {
+            alert('Switching to individual payment mode');
+            // Here you would switch the interface to individual payment mode
+            console.log('Individual payment mode activated');
+        }
+
+        function updateCommission() {
+            const category = document.querySelector('select').value;
+            const rate = document.querySelector('input[type="number"]').value;
+            
+            if (rate && rate > 0) {
+                alert(`Updating commission rate for ${category} to ${rate}%`);
+                // Here you would update the commission rate in your system
+                console.log(`Commission updated for ${category}: ${rate}%`);
+            } else {
+                alert('Please enter a valid commission rate');
+            }
+        }
+
+        function downloadTaxSummary() {
+            alert('Downloading tax summary for all drivers...');
+            // Here you would trigger tax summary download
+            console.log('Tax summary download initiated');
+        }
+
+        function analyzePayLevel(payLevel) {
+            alert(`Analyzing drivers in ${payLevel} pay level`);
+            // Here you would open detailed analysis for the pay level
+            console.log(`Analyzing pay level: ${payLevel}`);
+        }
+
+        function duplicateItem(row) {
+            const itemType = row.cells[0].textContent;
+            alert(`Duplicating ${itemType}`);
+            // Here you would duplicate the item in your system
+            console.log(`Duplicating item: ${itemType}`);
+        }
+
+        function activateSchedule(row) {
+            const scheduleName = row.cells[0].textContent;
+            alert(`Activating ${scheduleName}`);
+            // Here you would activate the schedule in your system
+            console.log(`Activating schedule: ${scheduleName}`);
+            
+            // Update the status in the UI
+            const statusCell = row.cells[5];
+            statusCell.innerHTML = '<span class="status active">Active</span>';
+            
+            // Change the button text
+            const button = row.querySelector('button');
+            button.textContent = 'Deactivate';
+            button.onclick = function() {
+                deactivateSchedule(row);
+            };
+        }
+
+        function deactivateSchedule(row) {
+            const scheduleName = row.cells[0].textContent;
+            alert(`Deactivating ${scheduleName}`);
+            // Here you would deactivate the schedule in your system
+            console.log(`Deactivating schedule: ${scheduleName}`);
+            
+            // Update the status in the UI
+            const statusCell = row.cells[5];
+            statusCell.innerHTML = '<span class="status inactive">Inactive</span>';
+            
+            // Change the button text
+            const button = row.querySelector('button');
+            button.textContent = 'Activate';
+            button.onclick = function() {
+                activateSchedule(row);
+            };
+        }
+
+        // Performance Chart Functions
+        function initializePerformanceChart() {
+            // Create animated performance bars
+            const performanceBars = document.querySelectorAll('.performance-chart .bar');
+            performanceBars.forEach((bar, index) => {
+                // Reset width to 0 for animation
+                bar.style.width = '0%';
+                
+                // Animate to target width using data-width attribute
+                setTimeout(() => {
+                    const targetWidth = bar.getAttribute('data-width');
+                    if (targetWidth) {
+                        animateBar(bar, 0, parseInt(targetWidth));
+                    }
+                }, index * 200);
+            });
+        }
+
+        function animateBar(bar, start, end) {
+            const duration = 1000; // 1 second
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentWidth = start + (end - start) * easeOutQuart;
+                
+                bar.style.width = currentWidth + '%';
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // Enhanced Chart Functions
+        function createEarningsChart() {
+            const chartContainer = document.querySelector('.performance-chart');
+            if (!chartContainer) return;
+            
+            // Add chart title
+            const chartTitle = document.createElement('h6');
+            chartTitle.textContent = 'Earnings vs Performance';
+            chartTitle.style.marginBottom = '15px';
+            chartTitle.style.color = '#666';
+            chartContainer.insertBefore(chartTitle, chartContainer.firstChild);
+            
+            // Add performance metrics
+            const metrics = document.createElement('div');
+            metrics.style.marginTop = '20px';
+            metrics.style.padding = '15px';
+            metrics.style.background = '#f8f9fa';
+            metrics.style.borderRadius = '8px';
+            metrics.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 18px; font-weight: bold; color: #28a745;">₱35,300</div>
+                        <div style="font-size: 12px; color: #666;">Total Combined</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 18px; font-weight: bold; color: #ffc107;">298</div>
+                        <div style="font-size: 12px; color: #666;">Total Trips</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 18px; font-weight: bold; color: #17a2b8;">4.85★</div>
+                        <div style="font-size: 12px; color: #666;">Avg Rating</div>
+                    </div>
+                </div>
+            `;
+            chartContainer.appendChild(metrics);
+        }
+
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                createEarningsChart();
+                initializeEarningsChart();
+            }, 500);
+        });
+
+        // Additional Chart Functions
+        function refreshPerformanceChart() {
+            alert('Refreshing performance chart...');
+            // Reset bars to 0 and re-animate
+            const bars = document.querySelectorAll('.performance-chart .bar');
+            bars.forEach((bar, index) => {
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    const targetWidth = bar.getAttribute('data-width');
+                    animateBar(bar, 0, parseInt(targetWidth));
+                }, index * 200);
+            });
+            console.log('Performance chart refreshed');
+        }
+
+        function exportPerformanceData() {
+            alert('Exporting performance data...');
+            // Here you would export the performance data
+            console.log('Performance data export initiated');
+        }
+
+        function toggleChartView() {
+            const chart = document.getElementById('performanceChart');
+            if (chart.style.display === 'none') {
+                chart.style.display = 'block';
+                alert('Chart view enabled');
+            } else {
+                chart.style.display = 'none';
+                alert('Chart view disabled');
+            }
+        }
+
+        function updateEarningsChart() {
+            alert('Updating earnings chart...');
+            // Here you would update the earnings chart with new data
+            console.log('Earnings chart update initiated');
+        }
+
+        function downloadEarningsChart() {
+            alert('Downloading earnings chart...');
+            // Here you would download the chart as an image
+            console.log('Earnings chart download initiated');
+        }
+
+        function initializeEarningsChart() {
+            const canvas = document.getElementById('earningsCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Sample data for earnings trend
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const earnings = [15000, 18000, 16500, 22000, 19500, 24000];
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw chart
+            ctx.fillStyle = '#28a745';
+            ctx.strokeStyle = '#28a745';
+            ctx.lineWidth = 2;
+            
+            const maxEarnings = Math.max(...earnings);
+            const barWidth = canvas.width / months.length;
+            const scale = (canvas.height - 40) / maxEarnings;
+            
+            // Draw bars
+            months.forEach((month, index) => {
+                const barHeight = earnings[index] * scale;
+                const x = index * barWidth + 10;
+                const y = canvas.height - barHeight - 20;
+                
+                // Bar
+                ctx.fillRect(x, y, barWidth - 20, barHeight);
+                
+                // Month label
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(month, x + (barWidth - 20) / 2, canvas.height - 5);
+                
+                // Earnings value
+                ctx.fillText(`₱${earnings[index].toLocaleString()}`, x + (barWidth - 20) / 2, y - 5);
+                
+                ctx.fillStyle = '#28a745';
+            });
+            
+            // Draw trend line
+            ctx.beginPath();
+            ctx.strokeStyle = '#ffc107';
+            ctx.lineWidth = 3;
+            
+            months.forEach((month, index) => {
+                const x = index * barWidth + 10 + (barWidth - 20) / 2;
+                const y = canvas.height - (earnings[index] * scale) - 20;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>x

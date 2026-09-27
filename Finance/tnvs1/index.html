@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TNVS</title>
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+	<div id="login" class="login">
+		<div class="login-card">
+			<form id="loginForm" class="login-form">
+				<label>Username
+					<input id="username" type="text" required autocomplete="username" placeholder="Enter your username">
+				</label>
+				<label>Password
+					<input id="password" type="password" required autocomplete="current-password" placeholder="Enter your password">
+				</label>
+				<button type="submit">Sign In</button>
+			</form>
+		</div>
+	</div>
+
+	<div id="app" class="app" style="display:none">
+		<header class="app-header">
+			<button id="menuToggle" class="icon-btn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+			<div class="brand" role="img" aria-label="TNVS Finance System">
+				<svg viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<rect x="0.5" y="0.5" rx="6" ry="6" width="119" height="23" fill="none" stroke="currentColor" opacity="0.4"/>
+					<text x="10" y="16" font-size="16" font-weight="800" letter-spacing="0.5" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" fill="currentColor">TNVS</text>
+					<circle cx="98" cy="12" r="4" fill="currentColor" opacity="0.15"/>
+					<path d="M96 12.5 L98 14.5 L102 10.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+			</div>
+			<div class="user">
+				<span id="currentUser">Welcome</span>
+				<button id="logoutBtn" class="text-btn">Logout</button>
+			</div>
+		</header>
+		<nav id="sidebar" class="sidebar">
+			<div class="group">
+				<h4>Main</h4>
+				<button class="nav active" data-section="dashboard" data-tooltip="Dashboard">
+					<span>Dashboard</span>
+				</button>
+				<button class="nav" data-section="general-ledger" data-tooltip="General Ledger">
+					<span>General Ledger</span>
+				</button>
+				<button class="nav" data-section="accounts" data-tooltip="Accounts P/R">
+					<span>Accounts P/R</span>
+				</button>
+			</div>
+			<div class="group">
+				<h4>Financial</h4>
+				<button class="nav" data-section="disbursement" data-tooltip="Disbursement">
+					<span>Disbursement</span>
+				</button>
+				<button class="nav" data-section="collection" data-tooltip="Collection">
+					<span>Collection</span>
+				</button>
+				<button class="nav" data-section="budget" data-tooltip="Budget">
+					<span>Budget</span>
+				</button>
+			</div>
+			<div class="group">
+				<h4>Management</h4>
+				<button class="nav" data-section="users" data-tooltip="Users">
+					<span>Users</span>
+				</button>
+				<button class="nav" data-section="ai-chat" data-tooltip="AI Chat">
+					<span>AI Chat</span>
+				</button>
+			</div>
+		</nav>
+		<div id="overlay" class="overlay"></div>
+		<main class="content hidden" id="mainContent">
+			<section id="dashboard" class="section active">
+				<h3>Dashboard Overview</h3>
+				<div class="cards">
+					<div class="card success">
+						<h4>Total Revenue</h4>
+						<div class="big">₱2,450,000</div>
+						<div class="card-trend">+12.5% from last month</div>
+					</div>
+					<div class="card warning">
+						<h4>Total Expenses</h4>
+						<div class="big">₱1,890,000</div>
+						<div class="card-trend">+8.2% from last month</div>
+					</div>
+					<div class="card success">
+						<h4>Net Profit</h4>
+						<div class="big">₱560,000</div>
+						<div class="card-trend">+18.7% from last month</div>
+					</div>
+					<div class="card success">
+						<h4>Collections (Month)</h4>
+						<div class="big">₱420,000</div>
+						<div class="card-trend">+15.3% from last month</div>
+					</div>
+					<div class="card warning">
+						<h4>Pending Payables</h4>
+						<div class="big">₱180,000</div>
+						<div class="card-trend">-5.2% from last month</div>
+					</div>
+					<div class="card success">
+						<h4>Fleet Utilization</h4>
+						<div class="big">87%</div>
+						<div class="card-trend">+3.1% from last month</div>
+					</div>
+				</div>
+				<div class="analytics">
+					<div class="chart-card">
+						<h4>Revenue Trend (Last 12 Months)</h4>
+						<div class="bars-chart" id="revenueChart">
+							<div class="bar" style="height:60%"></div>
+							<div class="bar" style="height:72%"></div>
+							<div class="bar" style="height:50%"></div>
+							<div class="bar" style="height:88%"></div>
+							<div class="bar" style="height:67%"></div>
+							<div class="bar" style="height:79%"></div>
+							<div class="bar" style="height:85%"></div>
+							<div class="bar" style="height:70%"></div>
+							<div class="bar" style="height:93%"></div>
+							<div class="bar" style="height:82%"></div>
+							<div class="bar" style="height:90%"></div>
+							<div class="bar" style="height:76%"></div>
+						</div>
+						<div class="chart-labels">
+							<span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+							<span>May</span><span>Jun</span><span>Jul</span><span>Aug</span>
+							<span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+						</div>
+					</div>
+
+					<div class="chart-card">
+						<h4>Expense Breakdown</h4>
+						<div class="breakdown">
+							<div class="breakdown-row">
+								<span class="label">Fuel & Maintenance</span>
+								<div class="barline"><span style="width:35%"></span></div>
+								<span class="value">₱45,000</span>
+							</div>
+							<div class="breakdown-row">
+								<span class="label">Driver Salaries</span>
+								<div class="barline"><span style="width:30%"></span></div>
+								<span class="value">₱38,000</span>
+							</div>
+							<div class="breakdown-row">
+								<span class="label">Insurance</span>
+								<div class="barline"><span style="width:20%"></span></div>
+								<span class="value">₱25,000</span>
+							</div>
+							<div class="breakdown-row">
+								<span class="label">Administrative</span>
+								<div class="barline"><span style="width:12%"></span></div>
+								<span class="value">₱15,000</span>
+							</div>
+							<div class="breakdown-row">
+								<span class="label">Other</span>
+								<div class="barline"><span style="width:3%"></span></div>
+								<span class="value">₱7,000</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="general-ledger" class="section">
+				<h3>General Ledger</h3>
+				<div class="table-wrap">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Account Code</th>
+								<th>Account Name</th>
+								<th>Debit</th>
+								<th>Credit</th>
+								<th>Balance</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr><td>1001</td><td>Cash</td><td>₱500,000</td><td>-</td><td>₱500,000</td></tr>
+							<tr><td>1002</td><td>Accounts Receivable</td><td>₱250,000</td><td>-</td><td>₱250,000</td></tr>
+							<tr><td>2001</td><td>Accounts Payable</td><td>-</td><td>₱150,000</td><td>₱150,000</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="accounts" class="section">
+				<h3>Accounts P/R</h3>
+				<h4>Accounts Payable</h4>
+				<div class="table-wrap">
+					<table class="table">
+						<thead><tr><th>Vendor</th><th>Invoice #</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead>
+						<tbody>
+							<tr><td>ABC Supplies</td><td>INV-001</td><td>₱25,000</td><td>2025-08-20</td><td>Pending</td></tr>
+							<tr><td>XYZ Services</td><td>INV-002</td><td>₱15,000</td><td>2025-08-25</td><td>Pending</td></tr>
+						</tbody>
+					</table>
+				</div>
+				<h4>Accounts Receivable</h4>
+				<div class="table-wrap">
+					<table class="table">
+						<thead><tr><th>Customer</th><th>Invoice #</th><th>Amount</th><th>Due Date</th><th>Status</th></tr></thead>
+						<tbody>
+							<tr><td>Company A</td><td>INV-101</td><td>₱50,000</td><td>2025-08-18</td><td>Overdue</td></tr>
+							<tr><td>Company B</td><td>INV-102</td><td>₱30,000</td><td>2025-08-22</td><td>Pending</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="disbursement" class="section">
+				<h3>Disbursement</h3>
+				<div class="table-wrap">
+					<table class="table">
+						<thead><tr><th>Payee</th><th>Purpose</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+						<tbody>
+							<tr><td>John Doe</td><td>Travel Expenses</td><td>₱5,000</td><td>2025-08-13</td><td>Approved</td></tr>
+							<tr><td>Jane Smith</td><td>Office Supplies</td><td>₱3,500</td><td>2025-08-12</td><td>Pending</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="collection" class="section">
+				<h3>Collection</h3>
+				<div class="table-wrap">
+					<table class="table" id="collectionTable">
+						<thead><tr><th>Customer</th><th>Invoice #</th><th>Amount</th><th>Collection Date</th><th>Method</th><th>Actions</th></tr></thead>
+						<tbody>
+							<tr>
+								<td>Company A</td><td>INV-101</td><td>₱50,000</td><td>2025-08-13</td><td>Bank Transfer</td>
+								<td><button class="btn-small print-receipt">Print Receipt</button></td>
+							</tr>
+							<tr>
+								<td>Company B</td><td>INV-102</td><td>₱30,000</td><td>2025-08-12</td><td>Cash</td>
+								<td><button class="btn-small print-receipt">Print Receipt</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="budget" class="section">
+				<h3>Budget Management</h3>
+				<div class="cards">
+					<div class="card success"><h4>Total Budget</h4><div class="big">₱5,000,000</div></div>
+					<div class="card warning"><h4>Spent</h4><div class="big">₱3,200,000</div></div>
+					<div class="card success"><h4>Remaining</h4><div class="big">₱1,800,000</div></div>
+				</div>
+				<div class="table-wrap" style="margin-top:12px">
+					<table class="table">
+						<thead><tr><th>Department</th><th>Budget</th><th>Spent</th><th>Remaining</th><th>Utilization</th></tr></thead>
+						<tbody>
+							<tr><td>Operations</td><td>₱2,000,000</td><td>₱1,500,000</td><td>₱500,000</td><td>75%</td></tr>
+							<tr><td>Marketing</td><td>₱1,000,000</td><td>₱800,000</td><td>₱200,000</td><td>80%</td></tr>
+							<tr><td>IT</td><td>₱500,000</td><td>₱300,000</td><td>₱200,000</td><td>60%</td></tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="users" class="section">
+				<h3>User Management</h3>
+				<div style="margin-bottom:16px">
+					<button id="addUserBtn" class="btn-small">Add User / Driver</button>
+				</div>
+				<div class="table-wrap">
+					<table class="table" id="usersTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Role</th>
+								<th>Email</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Admin User</td>
+								<td>Admin</td>
+								<td>admin@transportnetwork.com</td>
+								<td>Active</td>
+								<td><button class="btn-small view-user" data-user-id="1">View</button></td>
+							</tr>
+							<tr>
+								<td>Manager User</td>
+								<td>Manager</td>
+								<td>manager@transportnetwork.com</td>
+								<td>Active</td>
+								<td><button class="btn-small view-user" data-user-id="2">View</button></td>
+							</tr>
+							<tr>
+								<td>Employee User</td>
+								<td>Employee</td>
+								<td>employee@transportnetwork.com</td>
+								<td>Active</td>
+								<td><button class="btn-small view-user" data-user-id="3">View</button></td>
+							</tr>
+							<tr>
+								<td>Driver User</td>
+								<td>Driver</td>
+								<td>driver@transportnetwork.com</td>
+								<td>Active</td>
+								<td><button class="btn-small view-user" data-user-id="4">View</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section id="ai-chat" class="section">
+				<h3>AI Assistant</h3>
+				<div class="ai">
+					<div id="aiChatMessages" class="ai-messages">
+						<div class="msg bot">Hello! I can help with revenue, fleet, budget, and performance questions.</div>
+					</div>
+					<div class="ai-input">
+						<input id="aiChatInput" type="text" placeholder="Ask me anything about TNVS...">
+						<button id="aiSend" class="btn-small">Send</button>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+
+    <!-- User Profile Modal -->
+    <div id="profileModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
+            <div class="modal-header">
+                <h4 id="profileTitle">User Profile</h4>
+                <button id="closeProfile" class="icon-btn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="profile-head">
+                    <div class="avatar" aria-hidden="true">A</div>
+                    <div>
+                        <div class="name" id="pfName">-</div>
+                        <div class="meta"><span id="pfRole">-</span> • <span id="pfStatus">-</span></div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h5>Personal Information</h5>
+                    <div class="detail-grid">
+                        <div><label>Full name</label><span id="pfFullName">-</span></div>
+                        <div><label>Email</label><span id="pfEmail">-</span></div>
+                        <div><label>Phone</label><span id="pfPhone">-</span></div>
+                        <div><label>Address</label><span id="pfAddress">-</span></div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h5>Work Information</h5>
+                    <div class="detail-grid">
+                        <div><label>Employee ID</label><span id="pfEmployeeId">-</span></div>
+                        <div><label>Department</label><span id="pfDepartment">-</span></div>
+                        <div><label>Position</label><span id="pfPosition">-</span></div>
+                        <div><label>Hire Date</label><span id="pfHireDate">-</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User / Driver Modal -->
+    <div id="addUserModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="addUserTitle">
+            <div class="modal-header">
+                <h4 id="addUserTitle">Add User / Driver</h4>
+                <button id="closeAddUser" class="icon-btn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm" class="form-grid">
+                    <label>Name<input type="text" id="newUserName" required placeholder="Enter full name"></label>
+                    <label>Email<input type="email" id="newUserEmail" required placeholder="Enter email address"></label>
+                    <label>Role
+                        <select id="newUserRole">
+                            <option>Admin</option>
+                            <option>Manager</option>
+                            <option>Employee</option>
+                            <option>Driver</option>
+                        </select>
+                    </label>
+                    <label>Status
+                        <select id="newUserStatus">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </label>
+                    <div style="grid-column:1 / -1; text-align:right; margin-top:16px">
+                        <button class="btn-small" type="submit">Save User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+	<script src="app.js"></script>
+</body>
+</html>
+

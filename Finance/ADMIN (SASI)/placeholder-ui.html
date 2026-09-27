@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TNVS</title>
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+	<div id="app" class="app">
+
+		<!---header-->
+		<header class="app-header">
+			<button id="menuToggle" class="icon-btn" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+			<div class="brand" role="img" aria-label="TNVS Finance System">
+				<svg viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<text x="10" y="16" font-size="16" font-weight="800" letter-spacing="0.5" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" fill="currentColor">SAKAYSAYA</text>
+				</svg>
+			</div>
+			<div class="user">
+				<span id="currentUser">Welcome</span>
+				<button id="logoutBtn" class="text-btn">Logout</button>
+			</div>
+		</header>
+
+         <!---sidebar-->
+		<nav id="sidebar" class="sidebar">
+			<div class="group">
+				<h4>Main</h4>
+				<button class="nav active" data-section="dashboard" data-tooltip="Dashboard">
+					<span>Dashboard</span>
+				</button>
+				<button class="nav" data-section="general-ledger" data-tooltip="General Ledger">
+					<span>General Ledger</span>
+				</button>
+				<button class="nav" data-section="accounts" data-tooltip="Accounts P/R">
+					<span>Accounts P/R</span>
+				</button>
+			</div>
+			<div class="group">
+				<h4>Financial</h4>
+				<button class="nav" data-section="disbursement" data-tooltip="Disbursement">
+					<span>Disbursement</span>
+				</button>
+				<button class="nav" data-section="collection" data-tooltip="Collection">
+					<span>Collection</span>
+				</button>
+				<button class="nav" data-section="budget" data-tooltip="Budget">
+					<span>Budget</span>
+				</button>
+			</div>
+			<div class="group">
+				<h4>Management</h4>
+				<button class="nav" data-section="users" data-tooltip="Users">
+					<span>Users</span>
+				</button>
+				<button class="nav" data-section="ai-chat" data-tooltip="AI Chat">
+					<span>AI Chat</span>
+				</button>
+			</div>
+		</nav>
+		<div id="overlay" class="overlay"></div>
+
+		<!---main content-->    
+		<main class="content hidden" id="mainContent">
+			<!---dashboard-->
+			<section id="dashboard" class="section active">
+				<h3>Dashboard Overview</h3>
+				
+			</section>
+			
+		</main>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>
+
